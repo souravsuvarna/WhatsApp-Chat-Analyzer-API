@@ -68,9 +68,6 @@ def process(data):
     df.drop(columns = ['user_message'], inplace = True )
     
     
-    
-    
-    
     #Year
     df['year'] = df['date'].dt.year
     
@@ -103,6 +100,7 @@ def process(data):
     
     return df
 
+
 def activity_over_period(df):
     
     new_time=[] #list to store concatination of columns
@@ -114,7 +112,7 @@ def activity_over_period(df):
         
     df.drop(columns={'year','day'},inplace=True)   #dropping unnecessary columns
     
-    # df['Date'] = pd.to_datetime(df['Date'])  #convering concated string into datetime format
+    df['Date'] = pd.to_datetime(df['Date']).dt.date  #convering concated string into date format
         
     df.rename(columns={'month_num':'Message'},inplace=True) #Renaming column
         
