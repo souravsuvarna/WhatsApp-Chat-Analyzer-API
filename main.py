@@ -129,3 +129,21 @@ async def overall_activity(request : fetch_stats_model):
     json_data = df.to_dict(orient="records")
     
     return json_data    
+
+
+#Percentage of Chats contributed by each users in the group , should use only for overall group chat analysis
+@app.post("/chat-percentage")
+async def chat_percentage(json_data : dict):
+    
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values)
+    
+    df = backend.percentage_of_chats(df)
+    
+    #Converting df to dict
+    json_data = df.to_dict(orient="records")
+    
+    return json_data      

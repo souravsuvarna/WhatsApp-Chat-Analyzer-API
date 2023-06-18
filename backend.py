@@ -78,3 +78,16 @@ def overall_activity_data(selected_user,df):
     return df #retruns dataframe    
 
 
+#Percentage of chats per user
+def percentage_of_chats(df):
+    
+    #Return Percentages with index and users columns as default column names where index has username and user has percentage of respective users
+    y=(df['user'].value_counts()/df.shape[0])*100 
+    
+    # converting y to data frame and renaming the columns
+    df=y.reset_index().rename(columns = {'index':'User','user':'Percentage'})  
+    
+    #Roundig to 2 position
+    df.Percentage=df.Percentage.round(2)
+    
+    return df
