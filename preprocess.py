@@ -90,12 +90,34 @@ def process(data):
     #Minute
     df['minute'] = df['date'].dt.minute
     
+    #Month Number
     df['month_num']=df['date'].dt.month
     
-    df = df.drop('date', axis=1)
+    #Dayname
+    df['dayname'] = df['date'].dt.day_name()
     
+    df = df.drop('date', axis=1)
+     
     #Removing rows of group_notifications as they not needed
     df=df[df['user']!='group_notification']
     
     return df
 
+def activity_over_period(df):
+    
+    new_time=[] #list to store concatination of columns
+    
+    for i in range(len(df)):
+        new_time.append((str(df.iloc[i,0]) + "-" + str(df.iloc[i,2])+"-"+str(df.iloc[i,1])))  #concating date
+        
+    df['Date']=new_time     #created new column for storing date list
+        
+    df.drop(columns={'year','day'},inplace=True)   #dropping unnecessary columns
+    
+    # df['Date'] = pd.to_datetime(df['Date'])  #convering concated string into datetime format
+        
+    df.rename(columns={'month_num':'Message'},inplace=True) #Renaming column
+        
+    df = df.groupby(['Date']).count()['Message'].reset_index()
+    
+    return df

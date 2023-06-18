@@ -20,9 +20,9 @@ class main_json_data_model(BaseModel):
     hour: int
     minute: int
     month_num: int
+    dayname: str
   
-  
-#Class Model for Fetch-stat Service  
+#Class Model for Fetch-stat Service & Overall Activity Service & More 
 class fetch_stats_model(BaseModel):
     data: dict
     username: str   #contains client selected username
@@ -55,7 +55,7 @@ async def file_upload(file: UploadFile = File(None)):
  
 # Geneartes List of users
 @app.post("/group-members") 
-async def members_list(json_data:dict): 
+async def members_list(json_data : dict): 
     
     #Remove "Main" key in JSON
     data_values = json_data["Main"]
@@ -74,7 +74,7 @@ async def members_list(json_data:dict):
 
 #Top Active Users according to the number of message sent (desc order)
 @app.post("/top-active-members")
-async def top_active_members(json_data:dict):
+async def top_active_members(json_data : dict):
     
     #Remove "Main" key in JSON
     data_values = json_data["Main"]
@@ -108,3 +108,24 @@ async def fetch_stat(request : fetch_stats_model ):
     
     return {"Total Messages":num_messages,"Total Words":num_words,"Media Shared":num_media,"Link Shared":num_links}
 
+
+#Overall Activity of Selected User OR OverAll Group
+@app.post("/overall-activity")
+async def overall_activity(request : fetch_stats_model):
+    
+    selected_user = request.username     #Selects client passed username Parameter
+    
+    json_data = request.data    #Client JSON
+
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values)  
+    
+    df = backend.overall_activity_data(selected_user,df)
+    
+    #Converting df to dict
+    json_data = df.to_dict(orient="records")
+    
+    return json_data    

@@ -63,5 +63,17 @@ def fetch_stat(selected_user,df):
         
     return num_messages,len(words),media,len(links)    #len return length of list(i.e) number of elements in the list
 
+
+#Overall Activity of Selected User OR OverAll Group
+def overall_activity_data(selected_user,df):
     
+    if selected_user != 'Overall Group':
+        
+        df = df[df['user'] == selected_user]  
+    
+    df=df.drop(columns={'user','message','month','hour','minute','dayname'})  #droping unnecassary columns  
+    
+    df = preprocess.activity_over_period(df) #calling function to retrun final dataframe
+    
+    return df #retruns dataframe    
 
