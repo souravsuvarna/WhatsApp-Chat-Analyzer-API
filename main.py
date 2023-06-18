@@ -11,15 +11,15 @@ main_df = pd.DataFrame()
 df = pd.DataFrame()
 
 #Class Model for our main_json_data   
-# class main_json_data_model(BaseModel):
-#     user: Union[str, None] = None
-#     message: Union[str, None] = None
-#     year: int
-#     month: str
-#     day: int
-#     hour: int
-#     minute: int
-#     month_num: int
+class main_json_data_model(BaseModel):
+    user: str
+    message: str
+    year: int
+    month: str
+    day: int
+    hour: int
+    minute: int
+    month_num: int
 
 app = FastAPI()
 
@@ -82,3 +82,15 @@ async def top_active_members(json_data:dict):
     
     return json_data
 
+@app.post("/fetch-stats")
+async def fetch_stat(selected_user:str,json_data:dict):
+    
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values)  
+    
+    num_messages ,num_words, num_media , num_links = backend.fetch_stat(selected_user,df)  
+    
+    return {"Total Messages":num_messages,"Total Words":num_words,"Media Shared":num_media,"Link Shared":num_links}

@@ -1,7 +1,8 @@
 
 import preprocess
 import pandas as pd
-
+from urlextract import URLExtract
+extract = URLExtract()
 
 # List of users
 def list_of_members(df):
@@ -29,5 +30,39 @@ def top_active_members(df):
     
     return df
     
+    
+#Total Messages
+
+def fetch_stat(selected_user,df):
+    if selected_user != 'Overall Group':
+        
+        df = df[df['user'] == selected_user]    #masking dataframe to have only selected_user data
+        
+    #if selected_user is "overall" then no changes in dataframe    
+    
+    #1.fetching no of messages
+    num_messages = df.shape[0]
+        
+    #2.fetching number of words
+        
+    words = [] #createing a list for storing individual messages
+        
+    for message in df['message']:
+        words.extend(message.split())   #spliting messages to words and extend the list
+     
+        
+    #3.feching no of media sent
+    
+    media = df[df['message']=='<Media omitted>\n'].shape[0]
+    
+    
+    #4.fetching no of links
+    
+    links = [] #list to store links
+    for message in df['message']:
+        links.extend(extract.find_urls(message))
+        
+    return num_messages,len(words),media,len(links)    #len return length of list(i.e) number of elements in the list
+
     
 
