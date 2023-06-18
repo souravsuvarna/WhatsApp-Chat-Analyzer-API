@@ -31,8 +31,7 @@ def top_active_members(df):
     return df
     
     
-#Total Messages
-
+#Fetch-Stat
 def fetch_stat(selected_user,df):
     if selected_user != 'Overall Group':
         

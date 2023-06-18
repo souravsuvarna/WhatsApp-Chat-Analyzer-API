@@ -20,6 +20,13 @@ class main_json_data_model(BaseModel):
     hour: int
     minute: int
     month_num: int
+  
+  
+#Class Model for Fetch-stat Service  
+class fetch_stats_model(BaseModel):
+    data: dict
+    username: str   #contains client selected username
+
 
 app = FastAPI()
 
@@ -82,8 +89,14 @@ async def top_active_members(json_data:dict):
     
     return json_data
 
+
+#Fetch stats:- Total Number of : Message sent, Words, Media & LInk shared
 @app.post("/fetch-stats")
-async def fetch_stat(selected_user:str,json_data:dict):
+async def fetch_stat(request : fetch_stats_model ):
+    
+    selected_user = request.username    #Selects client passed username Parameter
+    
+    json_data = request.data    #Client JSON
     
     #Remove "Main" key in JSON
     data_values = json_data["Main"]
@@ -94,3 +107,4 @@ async def fetch_stat(selected_user:str,json_data:dict):
     num_messages ,num_words, num_media , num_links = backend.fetch_stat(selected_user,df)  
     
     return {"Total Messages":num_messages,"Total Words":num_words,"Media Shared":num_media,"Link Shared":num_links}
+

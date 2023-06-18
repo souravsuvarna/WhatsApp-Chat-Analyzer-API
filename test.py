@@ -58,3 +58,29 @@ else:
     print("Error:", response.status_code)
     
 print("Success")
+
+
+
+
+# 4.Fetch Stats
+
+url = "http://127.0.0.1:8000/fetch-stats"
+
+username="Nitte Sourav Mca"
+
+payload = {
+    "data": json_data,
+    "username": username
+}
+response = requests.post(url,json=payload)
+
+if response.status_code == 200:
+    # Extract the JSON data from the response
+    json_data_fetch_stat = response.json()
+
+    # Process the JSON data as needed
+    print(json_data_fetch_stat)
+else:
+    print("Error:", response.status_code)
+    
+print("Success")
