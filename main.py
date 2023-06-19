@@ -147,3 +147,67 @@ async def chat_percentage(json_data : dict):
     json_data = df.to_dict(orient="records")
     
     return json_data      
+
+
+#Monthly Activity (Number of messages in each month)
+@app.post("/monthly-activity")
+async def monthly_activity(request : fetch_stats_model):
+    
+    selected_user = request.username     #Selects client passed username Parameter
+    
+    json_data = request.data    #Client JSON
+
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values) 
+    
+    df = backend.monthly_messages(selected_user,df)
+    
+    #Converting df to dict
+    json_data = df.to_dict(orient="records")
+    
+    return json_data 
+
+
+#Weekly Activity (Number of messages per week)
+@app.post("/weekly-activity")
+async def weekly_activity(request : fetch_stats_model):
+    
+    selected_user = request.username     #Selects client passed username Parameter
+    
+    json_data = request.data    #Client JSON
+
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values) 
+    
+    df = backend.weekly_messages(selected_user,df)
+    
+    json_data = df.to_dict(orient="records")
+    
+    return json_data
+
+
+#Daily Activity (Number of messages per hour)
+@app.post("/daily-activity")
+async def daily_activity(request : fetch_stats_model):
+    
+    selected_user = request.username     #Selects client passed username Parameter
+    
+    json_data = request.data    #Client JSON
+
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values) 
+    
+    df = backend.daily_messages(selected_user,df)
+    
+    json_data = df.to_dict(orient="records")
+    
+    return json_data

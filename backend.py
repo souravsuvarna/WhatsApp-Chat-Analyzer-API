@@ -91,3 +91,82 @@ def percentage_of_chats(df):
     df.Percentage=df.Percentage.round(2)
     
     return df
+
+
+#Number of messages per month
+def monthly_messages(selected_user,df):
+    
+    if selected_user != 'Overall Group':
+        
+        df = df[df['user'] == selected_user]  
+          
+    dfmonth=df['month']
+    
+    dfmonth=dfmonth.reset_index()
+    
+    dfmonth.drop(columns={'index'},inplace=True)
+    
+    dfmonth=dfmonth['month'].value_counts()
+    
+    dfmonth=dfmonth.reset_index()
+    
+    dfmonth.rename(columns={'index':'month','month':0},inplace=True)
+    
+    m_order = ['January', 'February', 'March', 'April', 'May', 'June','July','August','September','October','November','December']
+    
+    dfmonth['month'] = pd.Categorical(dfmonth['month'], categories=m_order, ordered=True)
+    
+    dfmonth = dfmonth.sort_values('month')
+    
+    dfmonth.rename(columns={'month':'Month',0:'Message'},inplace=True)
+    
+    return dfmonth
+
+
+#Number of messages per week
+def weekly_messages(selected_user,df):
+    
+    if selected_user != 'Overall Group':
+        
+        df = df[df['user'] == selected_user] 
+        
+    dfweek = df['dayname']
+    
+    dfweek=dfweek.reset_index()
+    
+    dfweek.drop(columns={'index'},inplace=True)
+    
+    dfweek=dfweek['dayname'].value_counts()
+    
+    dfweek=dfweek.reset_index()
+    
+    dfweek.rename(columns={'index':'Day','dayname':'Message'},inplace=True)
+    
+    day_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday']
+    
+    dfweek['Day'] = pd.Categorical(dfweek['Day'], categories=day_order, ordered=True)
+    
+    dfweek = dfweek.sort_values('Day')
+    
+    return dfweek
+
+
+def daily_messages(selected_user,df):
+    
+    if selected_user != 'Overall Group':
+        
+        df = df[df['user'] == selected_user] 
+    
+    dftime = df['hour']
+    
+    dftime=dftime.reset_index()
+    
+    dftime=dftime['hour'].value_counts()
+    
+    dftime=dftime.reset_index()
+    
+    dftime.rename(columns={'index':'Hour','hour':'Message'},inplace=True)
+    
+    dftime=dftime.sort_values(by='Hour')
+    
+    return dftime
