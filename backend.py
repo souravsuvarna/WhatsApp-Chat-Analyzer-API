@@ -3,6 +3,7 @@ import preprocess
 import pandas as pd
 from urlextract import URLExtract
 import re
+import emoji
 extract = URLExtract()
 
 # List of users
@@ -202,3 +203,60 @@ def emoji_shared_per_user(df):
     emoji.rename(columns={'user':'User','Emoticons_count':'Emoji'},inplace=True)
     
     return emoji
+
+
+#The late night chat data
+def late_night_chats(df):
+    
+    df=df.loc[(df['hour']>22) | (df['hour']<4)]
+    
+    df=df['user'].value_counts()
+    
+    df=df.reset_index()
+    
+    df.rename(columns={'index':'User','user':'Messages'},inplace=True)
+    
+    return df 
+
+
+#The early morning chat data
+def early_morning_chats(df):
+    
+    df=df.loc[(df['hour']>3) & (df['hour']<7)]
+    
+    df=df['user'].value_counts()
+    
+    df=df.reset_index()
+    
+    df.rename(columns={'index':'User','user':'Messages'},inplace=True)
+    
+    return df  
+
+
+
+#Most Shared Emojis
+
+def most_shared_emoji(selected_user,df):
+    if selected_user != 'Overall Group':
+        df = df[df['user'] == selected_user] 
+            
+    emojis=[]
+    for message in df['message']:
+        emojis.extend([c for c in message if emoji.emoji_list(c)])
+    s=len(emojis)
+                
+    if s>0:
+                    
+        df2 = pd.DataFrame(emojis)
+
+        df2.rename(columns={0:'Emoji'},inplace=True)
+
+        df2 = df2.value_counts().reset_index()
+        
+        df2.rename(columns={0:'Sent'},inplace=True)
+
+        return df2
+    else:
+        df2 = pd.DataFrame(columns=['200', 'No Content'])
+        
+        return df2

@@ -16,7 +16,7 @@ json_data = response.json()
 if response.status_code == 200:
      # Process the JSON data as needed
     print(json_data)
-    print("Success")
+    print("Success 1")
 else:
     print("Error:", response.status_code)
     
@@ -37,7 +37,7 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_group)
     
-    print("Success")
+    print("Success 2")
 else:
     print("Error:", response.status_code)
     
@@ -58,7 +58,7 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_top_active_users)
     
-    print("Success")
+    print("Success 3")
     
 else:
     print("Error:", response.status_code)
@@ -88,7 +88,7 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_fetch_stat)
     
-    print("Success")
+    print("Success 4")
 else:
     print("Error:", response.status_code)
     
@@ -115,7 +115,7 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_overall_activity)
     
-    print("Success")
+    print("Success 5")
 else:
     print("Error:", response.status_code)
     
@@ -137,7 +137,7 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_percenatge_of_chats)
     
-    print("Success")
+    print("Success 6")
 else:
     print("Error:", response.status_code)
     
@@ -165,7 +165,7 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_monthly_activity)
     
-    print("Success")
+    print("Success 7")
 else:
     print("Error:", response.status_code)
     
@@ -192,7 +192,7 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_weekly_activity)
     
-    print("Success")
+    print("Success 8")
 else:
     print("Error:", response.status_code)
     
@@ -219,7 +219,7 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_daily_activity)
     
-    print("Success")
+    print("Success 9")
 else:
     print("Error:", response.status_code)
     
@@ -228,7 +228,7 @@ else:
 
 #10.Media shared per user
 
-url = "http://127.0.0.1:8086/media-shared"
+url = "http://127.0.0.1:8086/num-of-media-shared"
 
 # Make the POST request to the FastAPI endpoint
 response = requests.post(url, json=json_data)
@@ -240,7 +240,7 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_media_shared)
     
-    print("Success")
+    print("Success 10")
     
 else:
     print("Error:", response.status_code)
@@ -251,7 +251,7 @@ else:
 
 #11.Emoji shared per user
 
-url = "http://127.0.0.1:8086/emoji-shared"
+url = "http://127.0.0.1:8086/num-of-emoji-shared"
 
 # Make the POST request to the FastAPI endpoint
 response = requests.post(url, json=json_data)
@@ -263,10 +263,82 @@ if response.status_code == 200:
     # Process the JSON data as needed
     print(json_data_emoji_shared)
     
-    print("Success")
+    print("Success 11")
+    
+else:
+    print("Error:", response.status_code)
+    
+    print("Fail")
+ 
+    
+
+#12.Late night chat data
+
+url = "http://127.0.0.1:8086/late-night-chat-data"
+
+# Make the POST request to the FastAPI endpoint
+response = requests.post(url, json=json_data)
+
+if response.status_code == 200:
+    # Extract the JSON data from the response
+    json_data_night_owls = response.json()
+
+    # Process the JSON data as needed
+    print(json_data_night_owls)
+    
+    print("Success 12")
     
 else:
     print("Error:", response.status_code)
     
     print("Fail")
     
+
+
+#13.Early Morning chat data
+
+url = "http://127.0.0.1:8086/early-morning-chat-data"
+
+# Make the POST request to the FastAPI endpoint
+response = requests.post(url, json=json_data)
+
+if response.status_code == 200:
+    # Extract the JSON data from the response
+    json_data_morning_koel = response.json()
+
+    # Process the JSON data as needed
+    print(json_data_morning_koel)
+    
+    print("Success 13")
+    
+else:
+    print("Error:", response.status_code)
+    
+    print("Fail")
+
+
+
+#14.Most Shared Emoji
+
+url = "http://127.0.0.1:8086/most-shared-emojis"
+
+username="Overall Group"
+
+payload = {
+    "data": json_data,
+    "username": username
+}
+response = requests.post(url,json=payload)
+
+if response.status_code == 200:
+    # Extract the JSON data from the response
+    json_data_most_shared_emojis = response.json()
+
+    # Process the JSON data as needed
+    print(json_data_most_shared_emojis)
+    
+    print("Success 14")
+else:
+    print("Error:", response.status_code)
+    
+    print("Fail")

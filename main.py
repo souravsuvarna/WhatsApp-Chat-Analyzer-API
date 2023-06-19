@@ -215,7 +215,7 @@ async def daily_activity(request : fetch_stats_model):
 
 
 #Number of Media Shared by  Users ( Only for Overall group Analysis)
-@app.post("/media-shared")
+@app.post("/num-of-media-shared")
 async def media_shared(json_data : dict):
     
     #Remove "Main" key in JSON
@@ -233,7 +233,7 @@ async def media_shared(json_data : dict):
 
 
 #Number of Emoji shared by user (Only for overall group analysis)
-@app.post("/emoji-shared")
+@app.post("/num-of-emoji-shared")
 async def emoji_shared(json_data : dict):
     
     #Remove "Main" key in JSON
@@ -248,3 +248,62 @@ async def emoji_shared(json_data : dict):
     json_data = df.to_dict(orient="records")
     
     return json_data    
+
+
+#Late Night Users Sorted desc according to number of msg sent, Overall Group analysis only (The Night Owls From 23:00 to 3:00)
+@app.post("/late-night-chat-data")
+async def late_night_chat(json_data : dict):
+    
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values) 
+    
+    df = backend.late_night_chats(df)
+    
+    #Converting df to dict
+    json_data = df.to_dict(orient="records")
+    
+    return json_data 
+  
+
+#Early Morning Users Sorted desc according to number of msg sent, Overall Group analysis only ( From 4:00 to 6:00) 
+@app.post("/early-morning-chat-data")
+async def early_morning_chat_data(json_data : dict):
+    
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values) 
+    
+    df = backend.early_morning_chats(df)
+    
+    #Converting df to dict
+    json_data = df.to_dict(orient="records")
+    
+    return json_data   
+
+
+#Most Shared Emojis
+@app.post("/most-shared-emojis")
+async def most_shared_emojis(request: fetch_stats_model):
+    
+    selected_user = request.username     #Selects client passed username Parameter
+    
+    json_data = request.data    #Client JSON
+
+    
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values) 
+    
+    df = backend.most_shared_emoji(selected_user,df)
+    
+    json_data = df.to_dict(orient="records")
+    
+    return json_data   
+    
