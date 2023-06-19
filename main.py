@@ -22,6 +22,7 @@ class main_json_data_model(BaseModel):
     month_num: int
     dayname: str
   
+  
 #Class Model for Fetch-stat Service & Overall Activity Service & More 
 class fetch_stats_model(BaseModel):
     data: dict
@@ -211,3 +212,39 @@ async def daily_activity(request : fetch_stats_model):
     json_data = df.to_dict(orient="records")
     
     return json_data
+
+
+#Number of Media Shared by  Users ( Only for Overall group Analysis)
+@app.post("/media-shared")
+async def media_shared(json_data : dict):
+    
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values) 
+    
+    df =  backend.media_shared_per_user(df)
+    
+    #Converting df to dict
+    json_data = df.to_dict(orient="records")
+    
+    return json_data 
+
+
+#Number of Emoji shared by user (Only for overall group analysis)
+@app.post("/emoji-shared")
+async def emoji_shared(json_data : dict):
+    
+    #Remove "Main" key in JSON
+    data_values = json_data["Main"]
+    
+    #Convert DF
+    df = pd.DataFrame(data_values) 
+    
+    df = backend.emoji_shared_per_user(df)
+    
+    #Converting df to dict
+    json_data = df.to_dict(orient="records")
+    
+    return json_data    

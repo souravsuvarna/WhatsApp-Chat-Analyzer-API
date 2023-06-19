@@ -226,3 +226,47 @@ else:
     print("Fail")
     
 
+#10.Media shared per user
+
+url = "http://127.0.0.1:8086/media-shared"
+
+# Make the POST request to the FastAPI endpoint
+response = requests.post(url, json=json_data)
+
+if response.status_code == 200:
+    # Extract the JSON data from the response
+    json_data_media_shared = response.json()
+
+    # Process the JSON data as needed
+    print(json_data_media_shared)
+    
+    print("Success")
+    
+else:
+    print("Error:", response.status_code)
+    
+    print("Fail")
+    
+
+
+#11.Emoji shared per user
+
+url = "http://127.0.0.1:8086/emoji-shared"
+
+# Make the POST request to the FastAPI endpoint
+response = requests.post(url, json=json_data)
+
+if response.status_code == 200:
+    # Extract the JSON data from the response
+    json_data_emoji_shared = response.json()
+
+    # Process the JSON data as needed
+    print(json_data_emoji_shared)
+    
+    print("Success")
+    
+else:
+    print("Error:", response.status_code)
+    
+    print("Fail")
+    

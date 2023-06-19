@@ -2,6 +2,7 @@
 import preprocess
 import pandas as pd
 from urlextract import URLExtract
+import re
 extract = URLExtract()
 
 # List of users
@@ -151,6 +152,7 @@ def weekly_messages(selected_user,df):
     return dfweek
 
 
+#Number of message sent by hour
 def daily_messages(selected_user,df):
     
     if selected_user != 'Overall Group':
@@ -170,3 +172,33 @@ def daily_messages(selected_user,df):
     dftime=dftime.sort_values(by='Hour')
     
     return dftime
+
+
+#Number of media shared by user
+def media_shared_per_user(df):
+    
+    df = df[df['message']=='<Media omitted>\n']
+    
+    df=df['user'].value_counts().reset_index()
+    
+    df.rename(columns={'index':'User','user':'Media'},inplace=True)
+    
+    return df
+
+
+#Number of emoji shared by user
+def emoji_shared_per_user(df):
+    
+    df.drop(columns={'year','month','day','hour','minute','dayname','month_num'},inplace=True)
+    
+    df["Emoticons"]=df["message"].apply(lambda x:re.findall(r'[\U0001f600-\U0001f650]', x))
+    
+    df["Emoticons_count"]=df["message"].apply(lambda x:len(re.findall(r'[\U0001f600-\U0001f650]', x)))
+    
+    emoji=df.groupby(["user"])["Emoticons_count"].sum().sort_values(ascending=False)
+    
+    emoji=emoji.reset_index()
+    
+    emoji.rename(columns={'user':'User','Emoticons_count':'Emoji'},inplace=True)
+    
+    return emoji
