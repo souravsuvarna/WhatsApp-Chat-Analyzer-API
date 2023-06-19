@@ -257,6 +257,6 @@ def most_shared_emoji(selected_user,df):
 
         return df2
     else:
-        df2 = pd.DataFrame(columns=['200', 'No Content'])
+        df2 = pd.DataFrame(columns=['204', 'No Content'])
         
         return df2
