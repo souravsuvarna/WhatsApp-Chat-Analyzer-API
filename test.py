@@ -1,7 +1,7 @@
 import requests,json
 
 # 1.Upload
-url = "http://127.0.0.1:8086/upload"
+url = "https://wachatanalyzer.onrender.com/upload"
 
 with open("mscs.txt", "rb") as file:
     # Create a dictionary to hold the file data
@@ -25,7 +25,7 @@ else:
 
 
 # 2.Group-Members
-url = "http://127.0.0.1:8086/group-members"
+url = "https://wachatanalyzer.onrender.com/group-members"
 
 # Make the POST request to the FastAPI endpoint
 response = requests.post(url, json=json_data)
@@ -46,7 +46,7 @@ else:
 
 
 #3.Top Users
-url = "http://127.0.0.1:8086/top-active-members"
+url = "https://wachatanalyzer.onrender.com/top-active-members"
 
 # Make the POST request to the FastAPI endpoint
 response = requests.post(url, json=json_data)
@@ -70,7 +70,7 @@ else:
 
 # 4.Fetch Stats
 
-url = "http://127.0.0.1:8086/fetch-stats"
+url = "https://wachatanalyzer.onrender.com/fetch-stats"
 
 username="Overall Group"
 
@@ -98,7 +98,7 @@ else:
 
 #5. Overall Activity of Selected User or Overall Group
 
-url = "http://127.0.0.1:8086/overall-activity"
+url = "https://wachatanalyzer.onrender.com/overall-activity"
 
 username="Overall Group"
 
@@ -125,7 +125,7 @@ else:
 
 #6.Percentages of chats done by user
 
-url = "http://127.0.0.1:8086/chat-percentage"
+url = "https://wachatanalyzer.onrender.com/chat-percentage"
 
 # Make the POST request to the FastAPI endpoint
 response = requests.post(url, json=json_data)
@@ -148,7 +148,7 @@ else:
 
 #7. Monthly Activity
 
-url = "http://127.0.0.1:8086/monthly-activity"
+url = "https://wachatanalyzer.onrender.com/monthly-activity"
 
 username="Overall Group"
 
@@ -175,7 +175,7 @@ else:
 
 #8.Weekly Activity
 
-url = "http://127.0.0.1:8086/weekly-activity"
+url = "https://wachatanalyzer.onrender.com/weekly-activity"
 
 username="Overall Group"
 
@@ -202,7 +202,7 @@ else:
 
 #9.Daily Activity
 
-url = "http://127.0.0.1:8086/daily-activity"
+url = "https://wachatanalyzer.onrender.com/daily-activity"
 
 username="Overall Group"
 
@@ -228,7 +228,7 @@ else:
 
 #10.Media shared per user
 
-url = "http://127.0.0.1:8086/num-of-media-shared"
+url = "https://wachatanalyzer.onrender.com/num-of-media-shared"
 
 # Make the POST request to the FastAPI endpoint
 response = requests.post(url, json=json_data)
@@ -251,7 +251,7 @@ else:
 
 #11.Emoji shared per user
 
-url = "http://127.0.0.1:8086/num-of-emoji-shared"
+url = "https://wachatanalyzer.onrender.com/num-of-emoji-shared"
 
 # Make the POST request to the FastAPI endpoint
 response = requests.post(url, json=json_data)
@@ -274,7 +274,7 @@ else:
 
 #12.Late night chat data
 
-url = "http://127.0.0.1:8086/late-night-chat-data"
+url = "https://wachatanalyzer.onrender.com/late-night-chat-data"
 
 # Make the POST request to the FastAPI endpoint
 response = requests.post(url, json=json_data)
@@ -297,7 +297,7 @@ else:
 
 #13.Early Morning chat data
 
-url = "http://127.0.0.1:8086/early-morning-chat-data"
+url = "https://wachatanalyzer.onrender.com/early-morning-chat-data"
 
 # Make the POST request to the FastAPI endpoint
 response = requests.post(url, json=json_data)
@@ -320,7 +320,7 @@ else:
 
 #14.Most Shared Emoji
 
-url = "http://127.0.0.1:8086/most-shared-emojis"
+url = "https://wachatanalyzer.onrender.com/most-shared-emojis"
 
 username="Overall Group"
 
