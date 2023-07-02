@@ -3,8 +3,5 @@ __pycache__/
 .ipynb_checkpoints/
 .requirements.txt
 .render.yaml
-.test.py
-.mscs.txt
-.project2.ipynb
-.tempCodeRunnerFile.py
-.railway.json
+
+
