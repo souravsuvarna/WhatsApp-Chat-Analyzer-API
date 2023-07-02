@@ -1,1 +1,0 @@
-https://wachatanalyzer.onrender.com
